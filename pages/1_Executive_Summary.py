@@ -76,15 +76,15 @@ def make_sparkline(values, title, color):
 
 st.markdown("### Monthly Trends")
 s1, s2 = st.columns(2)
-s1.plotly_chart(make_sparkline(labor_costs, "Labor Cost ($)", COLOR_LABOR), width="stretch")
-s2.plotly_chart(make_sparkline(aws_costs, "AWS Cost ($)", COLOR_AWS), width="stretch")
+s1.plotly_chart(make_sparkline(labor_costs, "Labor Cost ($)", COLOR_LABOR), use_container_width=True)
+s2.plotly_chart(make_sparkline(aws_costs, "AWS Cost ($)", COLOR_AWS), use_container_width=True)
 
 # --- Top 5 Cost Drivers ---
 st.markdown("### Top 5 Project Cost Drivers")
 proj_summary = labor_by_project_summary(labor_df)
 top5 = proj_summary[["Project Number", "Project Name", "Full Year Cost"]].head(5).reset_index(drop=True)
 top5["Full Year Cost"] = top5["Full Year Cost"].apply(lambda x: f"${x:,.0f}")
-st.dataframe(top5, width="stretch", hide_index=True)
+st.dataframe(top5, use_container_width=True, hide_index=True)
 
 # --- Sankey ---
 st.markdown("### Budget Flow — Funding BU → Project → Employee Type")
@@ -137,6 +137,6 @@ fig_sankey.update_layout(
     margin=dict(l=20, r=20, t=10, b=20),
     paper_bgcolor="#FFFAF0",
 )
-st.plotly_chart(fig_sankey, width="stretch")
+st.plotly_chart(fig_sankey, use_container_width=True)
 
 labor_df.drop(columns=["_fy_cost"], inplace=True)

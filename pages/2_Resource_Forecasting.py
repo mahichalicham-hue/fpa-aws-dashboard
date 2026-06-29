@@ -88,7 +88,7 @@ fig_cost.update_layout(
     margin=dict(l=60, r=20, t=20, b=60),
     paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
 )
-st.plotly_chart(fig_cost, width="stretch")
+st.plotly_chart(fig_cost, use_container_width=True)
 
 # --- Gantt Chart ---
 st.markdown("### Resource Gantt Chart")
@@ -113,7 +113,7 @@ if gantt_rows:
                             paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                             margin=dict(l=10, r=10, t=10, b=80), showlegend=True,
                             legend=dict(orientation="h", yanchor="top", y=-0.15, xanchor="center", x=0.5))
-    st.plotly_chart(fig_gantt, width="stretch")
+    st.plotly_chart(fig_gantt, use_container_width=True)
 
 # --- Treemap ---
 st.markdown("### Budget Composition — Treemap")
@@ -129,7 +129,7 @@ fig_tree = px.treemap(
 )
 fig_tree.update_layout(margin=dict(t=10, l=10, r=10, b=10), height=500,
                        paper_bgcolor="rgba(0,0,0,0)")
-st.plotly_chart(fig_tree, width="stretch")
+st.plotly_chart(fig_tree, use_container_width=True)
 
 
 

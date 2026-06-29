@@ -69,7 +69,7 @@ fig_cum.update_layout(
     paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
     margin=dict(l=60, r=20, t=20, b=40),
 )
-st.plotly_chart(fig_cum, width="stretch")
+st.plotly_chart(fig_cum, use_container_width=True)
 
 # --- Top 5 Account KPIs ---
 st.markdown("### Top 5 Cost-Driving Accounts")
@@ -106,7 +106,7 @@ st.dataframe(
 #     paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
 #     margin=dict(l=60, r=20, t=20, b=40),
 # )
-# st.plotly_chart(fig_cum, width="stretch")
+# st.plotly_chart(fig_cum, use_container_width=True)
 
 # --- Account Trends + Stacked (side by side) ---
 acct_long = filtered.melt(
@@ -129,7 +129,7 @@ with col_left:
                             legend=dict(font=dict(size=8)),
                             paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                             margin=dict(l=40, r=10, t=10, b=40))
-    st.plotly_chart(fig_lines, width="stretch")
+    st.plotly_chart(fig_lines, use_container_width=True)
 
 with col_right:
     st.markdown("### Monthly Cost by Account (Stacked)")
@@ -145,7 +145,7 @@ with col_right:
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         margin=dict(l=40, r=10, t=10, b=40),
     )
-    st.plotly_chart(fig_stack, width="stretch")
+    st.plotly_chart(fig_stack, use_container_width=True)
 
 # --- Assumptions ---
 st.markdown("### Forecast Assumptions")

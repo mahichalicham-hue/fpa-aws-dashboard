@@ -59,7 +59,7 @@ if emp_list:
             fig.update_layout(height=280, template="plotly_white", yaxis_title="Cost ($)",
                               margin=dict(l=50, r=10, t=10, b=30),
                               paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-            st.plotly_chart(fig, width="stretch", key=f"sp_hist_{emp_name}")
+            st.plotly_chart(fig, use_container_width=True, key=f"sp_hist_{emp_name}")
 else:
     st.info("No employees match the selected filters.")
 
@@ -110,7 +110,7 @@ if whatif_action == "Transfer Employee":
 
         result_df = pd.DataFrame(results)
         st.dataframe(result_df.style.format({c: "{:.1f}" for c in result_df.columns if c != "Month"}),
-                     width="stretch", hide_index=True)
+                     use_container_width=True, hide_index=True)
 
         total_moved = result_df["Hrs Moved"].sum()
         cost_impact = total_moved * rate
@@ -172,7 +172,7 @@ elif whatif_action == "Project Sunset":
 
             redist_df = pd.DataFrame(redistribution)
             st.dataframe(redist_df.style.format({"Hours Freed": "{:.0f}", "Cost Freed": "${:,.0f}"}),
-                         width="stretch", hide_index=True)
+                         use_container_width=True, hide_index=True)
 
             total_hrs_freed = redist_df["Hours Freed"].sum()
             st.metric("Total Hours Redistributed", f"{total_hrs_freed:.0f} hrs")
@@ -201,7 +201,7 @@ elif whatif_action == "Employee Layoff":
             monthly_savings.append({"Month": m, "Hours Saved": hrs, "Cost Saved": hrs * rate})
         savings_df = pd.DataFrame(monthly_savings)
         st.dataframe(savings_df.style.format({"Hours Saved": "{:.0f}", "Cost Saved": "${:,.0f}"}),
-                     width="stretch", hide_index=True)
+                     use_container_width=True, hide_index=True)
         total_saved = savings_df["Cost Saved"].sum()
         st.metric("Total Cost Savings", f"${total_saved:,.0f}",
                   delta=f"-{sum(savings_df['Hours Saved']):.0f} hrs removed")
@@ -233,7 +233,7 @@ elif whatif_action == "Employee Layoff":
         if redist_rows:
             redist_df = pd.DataFrame(redist_rows)
             st.dataframe(redist_df.style.format({"Hours": "{:.0f}", "Hrs Added/Month": "{:.1f}"}),
-                         width="stretch", hide_index=True)
+                         use_container_width=True, hide_index=True)
             total_hrs = sum(r["Hours"] for r in redist_rows)
             violations = [r for r in redist_rows if "Over 160" in r["Constraint Risk"]]
             if violations:
@@ -275,7 +275,7 @@ if st.button("Reset to Baseline", key="sp_reset"):
 st.markdown("### Monthly Hour Allocations (Apr–Dec)")
 edited = st.data_editor(
     edit_df.reset_index(), disabled=["Project Number", "Project Name"],
-    num_rows="fixed", key=f"edited_{selected_emp}", width="stretch",
+    num_rows="fixed", key=f"edited_{selected_emp}", use_container_width=True,
 )
 
 # --- Validation ---
@@ -306,7 +306,7 @@ merged_cost["Full Year"] = merged_cost[ACTUAL_MONTHS + FORECAST_MONTHS].sum(axis
 
 st.dataframe(
     merged_cost.style.format({m: "${:,.0f}" for m in ACTUAL_MONTHS + FORECAST_MONTHS + ["Full Year"]}),
-    width="stretch", hide_index=True,
+    use_container_width=True, hide_index=True,
 )
 total_fy = merged_cost["Full Year"].sum()
 st.metric("Employee Full Year Cost", f"${total_fy:,.0f}")
@@ -365,7 +365,7 @@ if abs(scale_factor - 1.0) > 0.001:
     st.dataframe(
         display_df.style.format({"Baseline Hours": "{:,.1f}", "Adjusted Hours": "{:,.1f}",
                                  "Delta Hours": "{:+,.1f}", "Adjusted Cost": "${:,.0f}"}),
-        width="stretch", hide_index=True,
+        use_container_width=True, hide_index=True,
     )
 
     new_total_cost = proj_emps["Adjusted Cost"].sum()
@@ -449,7 +449,7 @@ if saved_scenarios:
                 sc_a: [data_a["name"], data_a.get("description", ""), data_a.get("created_at", ""), f"${baseline_fy:,.0f}"],
                 sc_b: [data_b["name"], data_b.get("description", ""), data_b.get("created_at", ""), f"${baseline_fy:,.0f}"],
             })
-            st.dataframe(compare_df, width="stretch", hide_index=True)
+            st.dataframe(compare_df, use_container_width=True, hide_index=True)
 
             fig_cmp = go.Figure()
             monthly_costs = baseline_summary["Labor Cost"].tolist()
@@ -465,6 +465,6 @@ if saved_scenarios:
                 yaxis_title="Cost ($)", template="plotly_white", height=350,
                 paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
             )
-            st.plotly_chart(fig_cmp, width="stretch")
+            st.plotly_chart(fig_cmp, use_container_width=True)
 else:
     st.info("No saved scenarios yet. Use 'Save Current Scenario' above to create one.")
